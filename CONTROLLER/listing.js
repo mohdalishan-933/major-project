@@ -1,12 +1,21 @@
-const Listing = require("../model/listing.js");
-const NodeGeocoder = require('node-geocoder');
+const fetch = require("node-fetch");
+const NodeGeocoder = require("node-geocoder");
+
 const options = {
-  provider: 'openstreetmap',
-  httpAdapter : 'https',
-  userAgent :'Wanderlust/1.0'
+  provider: "openstreetmap",
+
+  // yaha custom fetch use kar rahe hain
+  fetch: function (url, opts) {
+    opts.headers = {
+      "User-Agent": "WanderLust/1.0 (mohdalishan933@gmail.com)"  // apna email likhna
+    };
+    return fetch(url, opts);
+  }
 };
+
 const geocoder = NodeGeocoder(options);
 
+module.exports = geocoder;
 
 module.exports.index = async (req,res)=>{
     const allListings = await Listing.find({});
