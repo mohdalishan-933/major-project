@@ -4,13 +4,7 @@ const NodeGeocoder = require("node-geocoder");
 const options = {
   provider: "openstreetmap",
 
-  // yaha custom fetch use kar rahe hain
-  fetch: function (url, opts) {
-    opts.headers = {
-      "User-Agent": "WanderLust/1.0 (mohdalishan933@gmail.com)"  // apna email likhna
-    };
-    return fetch(url, opts);
-  }
+  userAgent :'WanderlustApp/1.0'
 };
 
 const geocoder = NodeGeocoder(options);
