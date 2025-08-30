@@ -1,7 +1,9 @@
 const Listing = require("../model/listing.js");
 const NodeGeocoder = require('node-geocoder');
 const options = {
-  provider: 'openstreetmap'
+  provider: 'openstreetmap',
+  httpAdapter : 'https',
+  userAgent :'Wanderlust/1.0'
 };
 const geocoder = NodeGeocoder(options);
 

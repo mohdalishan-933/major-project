@@ -22,9 +22,9 @@ const listingsRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
+const Mongo_url ="mongodb://127.0.0.1:27017/wanderlust";
 
-
-const dbUrl = process.env.ATLASDB_URL; 
+// const dbUrl = process.env.ATLASDB_URL; 
 main()
 .then(()=>{
     console.log("Connected to DB");
@@ -33,7 +33,7 @@ main()
     console.log(err);
 })
 async function main() {
-    await mongoose.connect(dbUrl);
+    await mongoose.connect(Mongo_url);
 }
 
 app.set("view engine" ,"ejs");
@@ -44,7 +44,7 @@ app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
 const store = MongoStore.create({
-    mongoUrl : dbUrl,
+    mongoUrl : Mongo_url,
     crypto:{
        secret :process.env.SECRET,
     },
@@ -93,16 +93,15 @@ app.use("/listings/:id/review" , reviewRouter);
 app.use("/",userRouter);
 
 
-
-
-//error
-app.all("/*splat", (req,res,next)=>{
-    next(new ExpressError(404,"Page not found"));
-} );
-
 app.listen(8080,()=>{ 
     console.log("The listening on port 8080");
 });
+
+
+//error
+app.all("*", (req,res,next)=>{
+    next(new ExpressError(404,"Page not found"));
+} );
 
 app.use((err,req,res,next)=>{
     let {status = 500, message ="Something went wrong"} = err;

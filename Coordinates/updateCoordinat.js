@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Listing = require("../model/listing"); // apna schema ka path yaha dalna
 
 // Apna DB connection string
-mongoose.connect("mongodb://127.0.0.1:27017/YOUR_DB_NAME", {
+mongoose.connect("mongodb://127.0.0.1:27017/wanderlust", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
